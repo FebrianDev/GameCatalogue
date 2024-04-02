@@ -10,31 +10,36 @@ import SwiftUI
 struct ContentView: View {
     
     @StateObject private var viewModel = GameViewModel()
-        @State private var games: [Game] = []
+    @State private var games: [Game] = []
     
     var body: some View {
         NavigationView {
-        VStack(alignment:.leading){
-            
-            HStack{
-                Text("Game Catalogue").font(.title)
-                Spacer()
-                    NavigationLink(destination: ProfileView()) {
-                            Image(systemName: "person.fill")
-                                .foregroundColor(.black)
-                                .font(.system(size: 24))
+            VStack(alignment:.leading){
+                
+                HStack{
+                    Text("Game Catalogue").font(.title)
+                    Spacer()
+                    NavigationLink(destination: FavoriteView()) {
+                        Image(systemName: "bookmark.fill")
+                            .foregroundColor(.black)
+                            .font(.system(size: 24))
                     }
-            }
-            
-            if(games.isEmpty){
+                    NavigationLink(destination: ProfileView()) {
+                        Image(systemName: "person.fill")
+                            .foregroundColor(.black)
+                            .font(.system(size: 24))
+                    }
+                }
+                
+                if(games.isEmpty){
                     ProgressView()
-                .frame(maxWidth: UIScreen.main.bounds.width - 32, maxHeight: 100)
+                        .frame(maxWidth: UIScreen.main.bounds.width - 32, maxHeight: 100)
+                    
+                }
                 
-            }
-          
-            ScrollView(showsIndicators: false) {
-                
-                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 2), spacing: 16) {
+                ScrollView(showsIndicators: false) {
+                    
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2)) {
                         
                         ForEach(games, id: \.self) { item in
                             NavigationLink(destination: DetailGameView(id:item.id)){
@@ -57,7 +62,7 @@ struct ContentView: View {
                     
                 }
             }
-
+            
         }.padding()
     }
 }
@@ -69,33 +74,36 @@ struct CardView: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 10)
             .fill(Color.white)
-            .frame(minHeight: 196)
+            .frame(minHeight: 172)
             .overlay(
-                VStack(alignment:.leading) {
+                VStack(alignment:.center) {
                     
-                    AsyncImage(url: URL(string: game.background_image)) { image in
+                    AsyncImage(url: URL(string: game.backgroundImage)) { image in
                         image
                             .resizable()
                             .aspectRatio(contentMode: .fill)
-                            .frame(maxWidth:UIScreen.main.bounds.width - 32, maxHeight:100)
+                            .frame(maxWidth: UIScreen.main.bounds.width - 32, maxHeight: 100)
+                            .frame(minWidth:(UIScreen.main.bounds.width / 2) - 28, minHeight:100, alignment: .center)
                             .clipped()
                             .cornerRadius(10)
                         
+                        
                     } placeholder: {
                         ProgressView()
-                           .frame(maxWidth: UIScreen.main.bounds.width - 32, maxHeight: 100)
+                            .frame(maxWidth: UIScreen.main.bounds.width - 32, maxHeight: 100)
                     }
                     
                     Text(game.name)
                         .font(.system(size: 14, weight: .semibold)).padding(.top, 2).padding(.horizontal, 8)
                         .frame(maxWidth: .infinity, alignment: .leading) // Set maximum width to infinity
-                        .fixedSize(horizontal: false, vertical: true).foregroundColor(.black)
+                        .lineLimit(1).foregroundColor(.black)
                     
-                    Text(game.released).font(.system(size:12)).foregroundColor(.black).padding(.horizontal, 8)
-                    Text(String(game.rating_top)).font(.system(size:16, weight: .bold)).foregroundColor(.black).padding(.horizontal, 8).padding(.top, 2)
+                    Text(game.released).font(.system(size:12)).foregroundColor(.black).frame(maxWidth: .infinity, alignment: .leading) .padding(.horizontal, 8)
+                    
+                    Text(String(game.ratingTop)).font(.system(size:16, weight: .bold)).foregroundColor(.black).frame(maxWidth:.infinity, alignment: .trailing).padding(.horizontal, 8).padding(.top, 2)
                     
                     Spacer()
-                   
+                    
                 }
             )
             .shadow(radius: 2)
@@ -103,12 +111,5 @@ struct CardView: View {
     }
 }
 
-//API KEY
-//161deabe57214ce389e3af3573aad03d
-
-//https://api.rawg.io/api/games?key=161deabe57214ce389e3af3573aad03d
 
 
-#Preview {
-    ContentView()
-}

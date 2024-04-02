@@ -10,9 +10,18 @@ import Foundation
 struct GameDetail: Codable, Hashable {
     var id: Int = 0
     var name: String = ""
-    var description_raw:String = ""
+    var descriptionRaw: String = ""
     var released: String = ""
-    var background_image: String = ""
+    var backgroundImage: String = ""
     var rating: Double = 0.0
-    var rating_top:Int = 0
+    var ratingTop: Int = 0
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case descriptionRaw = "description_raw"
+        case backgroundImage = "background_image"
+        case released
+        case ratingTop = "rating_top"
+    }
 }

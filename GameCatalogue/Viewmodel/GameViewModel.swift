@@ -12,7 +12,7 @@ class GameViewModel : ObservableObject{
     let gameRepository = GameRepository()
     
     func getGames(completion: @escaping ([Game]?, Error?) -> Void){
-     
+        
         Task {
             do {
                 let games = try await gameRepository.getGames()
@@ -20,7 +20,7 @@ class GameViewModel : ObservableObject{
             }catch{
                 completion(nil, error)
             }
-          
+            
         }
     }
     

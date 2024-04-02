@@ -18,12 +18,12 @@ struct ProfileView: View {
                 .shadow(radius: 10)
             
             
-                Text("M Dwi Febrian")
-                    .font(.title3)
-                    .bold()
-                
-                Text("Mobile Developer")
-                    .font(.subheadline)
+            Text("M Dwi Febrian")
+                .font(.title3)
+                .bold()
+            
+            Text("Mobile Developer")
+                .font(.subheadline)
             
             
             Divider()

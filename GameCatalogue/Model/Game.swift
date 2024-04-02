@@ -10,7 +10,15 @@ import Foundation
 struct Game: Codable, Hashable {
     let id: Int
     let name: String
-    let background_image: String
+    let backgroundImage: String
     let released: String
-    let rating_top:Int
+    let ratingTop: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case backgroundImage = "background_image"
+        case released
+        case ratingTop = "rating_top"
+    }
 }
